@@ -40,7 +40,7 @@ public class player extends AppCompatActivity implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float roll = sensorEvent.values[2];
-        if(roll == )
+        if(roll == 1.0);
     }
 
     @Override
