@@ -15,7 +15,7 @@ public class player extends AppCompatActivity implements SensorEventListener {
     MediaPlayer player;
     SensorManager m ;
     Sensor s;
-
+    //aaaaaa
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
