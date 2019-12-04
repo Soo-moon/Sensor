@@ -17,14 +17,15 @@ import android.view.View;
 import android.widget.Toast;
 
 public class drawArc extends AppCompatActivity implements SensorEventListener{
+    public static int angle=10;
     SensorManager m ;
     Sensor s;
-
-    public static int angle=10;
+    myView v;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        v= new myView(this);
+        setContentView(v);
 
         m = (SensorManager) getSystemService(SENSOR_SERVICE);
         s=m.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -35,8 +36,6 @@ public class drawArc extends AppCompatActivity implements SensorEventListener{
         }
         m.registerListener(this,s,SensorManager.SENSOR_DELAY_UI);
 
-
-
     }
 
     @Override
@@ -45,8 +44,9 @@ public class drawArc extends AppCompatActivity implements SensorEventListener{
         float y = sensorEvent.values[1];
         float z = sensorEvent.values[2];
 
-        if(x*x +y*y + z*z >250){
+        if(x*x +y*y + z*z >100){
             angle+=10;
+            v.invalidate();
         }
     }
 
@@ -55,16 +55,25 @@ public class drawArc extends AppCompatActivity implements SensorEventListener{
 
     }
 }
-class myview extends View{
+class myView extends View{
 
-    public myview(Context context) {
+    public myView(Context context) {
         super(context);
+        setBackgroundColor(Color.BLUE);
     }
-
     protected void onDraw(Canvas canvas){
-        int x = getWidth()/2;
+        int x =getWidth()/2;
         int y = getHeight()/2;
-        Paint paint = new Paint();
+        int angle =drawArc.angle;
 
+        Paint paint =new Paint();
+        paint.setColor(Color.YELLOW);
+        canvas.drawArc(new RectF(0,y-x,x*2,y+x),270,angle,true,paint);
+        if(angle >360){
+            Toast.makeText(getContext(),"축하합니다" , Toast.LENGTH_LONG).show();
+           drawArc.angle=0;
+        }
     }
+
+
 }
